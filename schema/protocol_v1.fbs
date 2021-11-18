@@ -1,0 +1,92 @@
+// Generated from protocol_v1.proto
+
+namespace foxglove.websocket.v1.ClientMessage_;
+
+union MessageUnion {
+  foxglove.websocket.v1.Subscribe,
+  foxglove.websocket.v1.Unsubscribe,
+}
+
+namespace foxglove.websocket.v1.ServerMessage_;
+
+union MessageUnion {
+  foxglove.websocket.v1.ServerInfo,
+  foxglove.websocket.v1.StatusMessage,
+  foxglove.websocket.v1.Advertise,
+  foxglove.websocket.v1.Unadvertise,
+  foxglove.websocket.v1.MessageData,
+}
+
+namespace foxglove.websocket.v1.StatusMessage_;
+
+enum Level : int {
+  LEVEL_INFO = 0,
+  LEVEL_WARNING = 1,
+  LEVEL_ERROR = 2,
+}
+
+namespace foxglove.websocket.v1;
+
+table ClientMessage {
+  message:foxglove.websocket.v1.ClientMessage_.MessageUnion;
+}
+
+table ServerMessage {
+  message:foxglove.websocket.v1.ServerMessage_.MessageUnion;
+}
+
+table ServerInfo {
+  name:string;
+  capabilities:[string];
+}
+
+table StatusMessage {
+  level:foxglove.websocket.v1.StatusMessage_.Level;
+  message:string;
+}
+
+table Advertise {
+  channels:[foxglove.websocket.v1.Advertise_.Channel];
+}
+
+namespace foxglove.websocket.v1.Advertise_;
+
+table Channel {
+  id:uint;
+  topic:string;
+  encoding:string;
+  schema_name:string;
+  schema:[ubyte];
+}
+
+namespace foxglove.websocket.v1;
+
+table Unadvertise {
+  channels:[uint];
+}
+
+table Subscribe {
+  subscriptions:[foxglove.websocket.v1.Subscribe_.Subscription];
+}
+
+namespace foxglove.websocket.v1.Subscribe_;
+
+table Subscription {
+  id:uint;
+  channel_id:uint;
+}
+
+namespace foxglove.websocket.v1;
+
+table Unsubscribe {
+  subscription_ids:[uint];
+}
+
+table MessageData {
+  subscription_id:uint;
+  receive_timestamp:ulong;
+  payload:[ubyte];
+}
+
+root_type ClientMessage;
+root_type ServerMessage;

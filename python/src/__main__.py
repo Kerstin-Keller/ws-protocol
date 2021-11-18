@@ -1,16 +1,15 @@
 import asyncio
 import argparse
-import base64
 import signal
 from typing import TYPE_CHECKING, Any, Coroutine, Type
 
-from .server import FoxgloveServer
-from .types import ChannelId
+from server import FoxgloveServer
+from types import ChannelId
 
 try:
     from ecal.measurement.hdf5 import Meas
 except ImportError:
-    from .hdf5_native import Meas
+    from hdf5_native import Meas
 
 if TYPE_CHECKING:
     from . import hdf5_native
@@ -36,7 +35,7 @@ async def main(infile: str):
                 {
                     "topic": chan_name,
                     "encoding": "protobuf",
-                    "schema": base64.b64encode(descriptor).decode("ascii"),
+                    "schema": descriptor,
                     "schemaName": type,
                 }
             )
